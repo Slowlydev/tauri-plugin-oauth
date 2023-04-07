@@ -202,13 +202,30 @@ mod plugin_impl {
         config: Option<super::OauthConfig>,
     ) -> Result<u16, String> {
         let mut config = config.unwrap_or_default();
+
         if config.response.is_none() {
             config.response = window
                 .config()
                 .plugins
                 .0
                 .get("oauth")
+                .and_then(|v| v.get("response"))
                 .map(|v| v.as_str().unwrap().to_string().into());
+        }
+        if config.ports.is_none() {
+            config.ports = window
+                .config()
+                .plugins
+                .0
+                .get("oauth")
+                .and_then(|v| v.get("ports"))
+                .map(|v| {
+                    v.as_array()
+                        .unwrap()
+                        .iter()
+                        .map(|v| v.as_u64().unwrap() as u16)
+                        .collect()
+                });
         }
 
         crate::start_with_config(config, move |url| match url::Url::parse(&url) {
