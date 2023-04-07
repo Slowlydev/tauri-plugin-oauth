@@ -1,7 +1,7 @@
 [package]
 name = "tauri-plugin-oauth"
-version = "0.0.0"
-authors = ["FabianLars <fabianlars@fabianlars.de>"]
+version = "0.1.0"
+authors = ["FabianLars <fabianlars@fabianlars.de>", "Slowlydev"]
 description = "A Tauri plugin for spawning a localhost server. Needed for some oauth flows (Login with X)."
 edition = "2021"
 rust-version = "1.57"
